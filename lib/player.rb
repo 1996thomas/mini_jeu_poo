@@ -17,21 +17,23 @@ class Player
   end
 
   def attack(player)
+    if @life_points <= 0
+      return
+    end
     puts "#{@name} attaque #{player.name}"
-    player.gets_damage
+    player.gets_damage(compute_damage)
     player.show_state
   end
 
   def compute_damage
-    rand(1..6)
+  rand(1..6)
   end
 
-  def gets_damage
+  def gets_damage(compute_damage)
     damage = compute_damage
     @life_points -= damage
     puts "#{@name} a pris #{damage} points de dégats"
     return unless @life_points <= 0
-
     puts "#{@name} est KO"
   end
 end
@@ -55,11 +57,11 @@ class HumanPlayer < Player
     if weapon_multiplicator > @weapon_level
       @weapon_level = weapon_multiplicator
       puts "Bien joué tu as trouvé une arme plus puissante !"
-      return @weapon_level 
     elsif weapon_multiplicator == @weapon_level 
       puts "Mince, ton arme actuelle est du même niveau"
     else puts "Dommage, ton arme actuelle est d'un niveau supérieur"
     end
+    return @weapon_level
   end
 
   def search_health_pack
