@@ -5,18 +5,18 @@ Bundler.require
 require_relative 'lib/game'
 require_relative 'lib/player'
 
-puts "---------------------------------------------------------"
+puts '---------------------------------------------------------'
 puts "|       Bienvenue sur 'ILS VEULENT TOUS MA POO' !       |"
 puts "|    Le but du jeu est d'être le dernier survivant !    |"
-puts "---------------------------------------------------------"
+puts '---------------------------------------------------------'
 
-puts "---------------------------------------------------------"
+puts '---------------------------------------------------------'
 puts ">> Comment t'appelles-tu combattant ?          |"
 
 player_name = gets.chomp.to_s
 puts "Enchanté #{player_name}, prépare toi à te battre"
-puts "- Pour aller chercher une arme, appuie sur A"
-puts "- Pour aller chercher du soin, appuie sur S"
+puts '- Pour aller chercher une arme, appuie sur A'
+puts '- Pour aller chercher du soin, appuie sur S'
 player = HumanPlayer.new(player_name)
 player.default_show_state
 
@@ -27,9 +27,9 @@ player.default_show_state
 #   enemies << Player.new("enemi#{i}")
 # end
 # puts "Tu as choisis #{enemies.length} ennemis .. es-tu prêt ? "
-ennemies = [player1 = Player.new('José'),player2 = Player.new('Sanchez')]
+ennemies = [player1 = Player.new('José'), player2 = Player.new('Sanchez')]
 
-while player.life_points >0 && (player1.life_points > 0 || player2.life_points >0)
+while player.life_points.positive? && (player1.life_points.positive? || player2.life_points.positive?)
   # puts ">> Ecris 'help' pour revoir les règles"
   # help = gets.chomp.downcase
   # help_filter = 'help'
@@ -46,25 +46,22 @@ while player.life_points >0 && (player1.life_points > 0 || player2.life_points >
     puts "Je n'ai pas compris"
     action = gets.chomp.downcase
   end
-  puts "---------------------------------------------------------"
+  puts '---------------------------------------------------------'
   case action.to_s
-  when "a"
+  when 'a'
     player.search_weapon
-  when "s"
+  when 's'
     player.search_health_pack
-  when "0"
+  when '0'
     player.attack(player1)
-  when "1"
+  when '1'
     player.attack(player2)
   end
   ennemies.each do |ennemy|
-  ennemy.attack(player)
+    ennemy.attack(player)
   end
-      puts "---------------------------------------------------------"
-  puts ">> Appuie sur une touche pour continuer"
+  puts '---------------------------------------------------------'
+  puts '>> Appuie sur une touche pour continuer'
   gets.chomp
 end
-
-puts player.life_points > 0 ? "Bravo tu as gagné" : "Dommage tu as perdu"
-
-binding.pry
+puts player.life_points.positive? ? 'Bravo tu as gagné' : 'Dommage tu as perdu'
